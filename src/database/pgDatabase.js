@@ -10,18 +10,10 @@ const pool = new Pool({
     max: 20,
 });
 
-
-const connect = async () => {
-  try {
-    await pool.connect();
-    console.log("Connected to the database");
-  } catch (error) {
-    console.error("Error connecting to the database", error);
-  }
-};
-
-connect();
-
+pool.query("SELECT 1")
+  .then(() => console.log("✅ Connected to PostgreSQL database"))
+  .catch((err) => console.error("❌ Failed to connect to PostgreSQL", err));
+  
 const query = async (text, params) => {
   try {
     const res = await pool.query(text, params);
@@ -30,7 +22,6 @@ const query = async (text, params) => {
     console.error("Error executing query", error);
   }
 };
-
 
 module.exports = {
   query,
